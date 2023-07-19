@@ -3,6 +3,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.ticker import MaxNLocator
 
 title = 'Predict Amount of Commuter Passenger 🚉'
 subtitle = 'Predict Amount of Commuter Passenger using machine learning 🚄🚄 '
@@ -41,16 +42,20 @@ def main():
         # Create a DataFrame to store the results
         results = pd.DataFrame({'Date': pd.date_range(start=start_date, end=end_date), 'Predicted Passenger': predictions})
 
+        # Format the predicted passenger values as integers
+        results['Predicted Passenger'] = results['Predicted Passenger'].astype(int)
+
         # Visualize the results using matplotlib
         plt.style.use('dark_background') 
         plt.plot(results['Date'], results['Predicted Passenger'])
         plt.xlabel('Date')
         plt.ylabel('Predicted Passenger')
-        plt.xticks(rotation=90)
+        plt.xticks(rotation=45)
         plt.gca().spines['top'].set_visible(False)
         plt.gca().spines['right'].set_visible(False)
         plt.title('Predicted Amount of Commuter Passenger over Time')
-         # Set dark background
+        plt.gca().xaxis.set_major_locator(MaxNLocator(nbins=10))  # Set maximum number of x-axis ticks
+        
         st.pyplot(plt)
 
         # Optionally, you can also show the raw data in a table
