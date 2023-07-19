@@ -20,45 +20,40 @@ def main():
     submit = form.form_submit_button("Predict")  # Add a submit button
 
     if submit:
-        if start_date < pd.to_datetime('2006-01-01') or end_date < pd.to_datetime('2006-01-01'):
-            st.error("Input dates must be after the reference date (2006-01-01).")
-        elif start_date > end_date:
-            st.error("Start date must be before the end date.")
-        else:
-            data = {
-                'Kode Wilayah': Region,
-                'Tanggal Relatif': pd.date_range(start=start_date, end=end_date).to_list()
-            }
-            data = pd.DataFrame(data)
+        data = {
+            'Kode Wilayah': Region,
+            'Tanggal Relatif': pd.date_range(start=start_date, end=end_date).to_list()
+        }
+        data = pd.DataFrame(data)
 
-            data['Kode Wilayah'] = data['Kode Wilayah'].replace({'Jabodetabek': 0, 'Non Jabodetabek (Jawa)': 2, 'Jawa (Jabodetabek+Non Jabodetabek)': 1, 'Sumatera': 3})
+        data['Kode Wilayah'] = data['Kode Wilayah'].replace({'Jabodetabek': 0, 'Non Jabodetabek (Jawa)': 2, 'Jawa (Jabodetabek+Non Jabodetabek)': 1, 'Sumatera': 3})
 
-            # Convert Tanggal column to datetime and calculate the difference from the reference date
-            reference_date = pd.to_datetime('2006-01-01')
-            data['Tanggal Relatif'] = pd.to_datetime(data['Tanggal Relatif']).sub(reference_date).dt.days
+        # Convert Tanggal column to datetime and calculate the difference from the reference date
+        data['Tanggal Relatif'] = (pd.to_datetime(data['Tanggal Relatif']) - pd.to_datetime('2006-01-01')).dt.days
 
-            # Load the model from the pickle file
-            with open('model.pkl', 'rb') as f:
-                model = pickle.load(f)
+        # Load the model from the pickle file
+        with open('model.pkl', 'rb') as f:
+            model = pickle.load(f)
+        
+        # Make prediction using the loaded model
+        predictions = model.predict(data)
 
-            # Make prediction using the loaded model
-            predictions = model.predict(data)
+        # Create a DataFrame to store the results
+        results = pd.DataFrame({'Date': pd.date_range(start=start_date, end=end_date), 'Predicted Passenger': predictions})
 
-            # Create a DataFrame to store the results
-            results = pd.DataFrame({'Date': pd.date_range(start=start_date, end=end_date), 'Predicted Passenger': predictions})
+        # Visualize the results using matplotlib
+        plt.style.use('dark_background') 
+        plt.plot(results['Date'], results['Predicted Passenger'])
+        plt.xlabel('Date')
+        plt.ylabel('Predicted Passenger')
+        plt.gca().spines['top'].set_visible(False)
+        plt.gca().spines['right'].set_visible(False)
+        plt.title('Predicted Amount of Commuter Passenger over Time')
+         # Set dark background
+        st.pyplot(plt)
 
-            # Visualize the results using matplotlib
-            plt.style.use('dark_bckground')
-            plt.plot(results['Date'], results['Predicted Passenger'])
-            plt.xlabel('Date')
-            plt.ylabel('Predicted Passenger')
-            plt.title('Predicted Amount of Commuter Passenger over Time')
-            plt.gca().spines['top'].set_visible(False)
-            plt.gca().spines['right'].set_visible(False)
-            st.pyplot(plt)
-
-            # Optionally, you can also show the raw data in a table
-            st.dataframe(results)
+        # Optionally, you can also show the raw data in a table
+        st.dataframe(results)
 
 if __name__ == '__main__':
     main()
