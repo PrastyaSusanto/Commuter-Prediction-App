@@ -12,6 +12,7 @@ def main():
     st.set_page_config(layout="centered", page_icon='🚉', page_title='Lets Predict Amount of Commuter Passenger!')
     st.title(title)
     st.write(subtitle)
+    st.write("For more information about this project, check here: [GitHub Repo](https://github.com/PrastyaSusanto/Commuter-Prediction-App/tree/main)")
 
     form = st.form("Data Input")
     Region = form.selectbox('Region', ['Jabodetabek', 'Non Jabodetabek (Jawa)', 'Jawa (Jabodetabek+Non Jabodetabek)', 'Sumatera'])
@@ -63,7 +64,7 @@ def main():
 
         # Optionally, you can also show the raw data in a table
         st.dataframe(results)
-    st.write("For more information about this project, check here: [GitHub Repo](https://github.com/PrastyaSusanto/Commuter-Prediction-App/tree/main)")
+    
 
 if __name__ == '__main__':
     main()
