@@ -47,7 +47,7 @@ def main():
 
         # Visualize the results using matplotlib
         plt.style.use('dark_background') 
-        plt.plot(results['Date'], results['Predicted Passenger'])
+        plt.plot(results['Date'], results['Predicted Passenger'], color='royalblue')
         plt.xlabel('Year')
         plt.ylabel('Predicted Passenger')
         plt.xticks(rotation=90)
@@ -63,6 +63,7 @@ def main():
 
         # Optionally, you can also show the raw data in a table
         st.dataframe(results)
+    st.write("For more information about this project, check here: [GitHub Repo](https://github.com/PrastyaSusanto/Commuter-Prediction-App/tree/main)")
 
 if __name__ == '__main__':
     main()
