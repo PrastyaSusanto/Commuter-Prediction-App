@@ -50,7 +50,7 @@ def main():
         plt.plot(results['Date'], results['Predicted Passenger'])
         plt.xlabel('Year')
         plt.ylabel('Predicted Passenger')
-        plt.xticks(rotation=45)
+        plt.xticks(rotation=90)
         plt.gca().spines['top'].set_visible(False)
         plt.gca().spines['right'].set_visible(False)
         plt.title('Predicted Amount of Commuter Passenger over Time')
