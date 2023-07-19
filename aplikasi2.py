@@ -39,14 +39,22 @@ def main():
         # Make prediction using the loaded model
         predictions = model.predict(data)
 
-        # Create a DataFrame to store the results
-        results = pd.DataFrame({'Date': data['Tanggal Relatif'], 'Predicted Passenger': predictions})
+        # Convert Tanggal column to datetime and calculate the predicted dates
+        predicted_dates = reference_date + pd.to_timedelta(predictions, unit='D')
+
+        # Create a DataFrame to store the results with the original dates
+        results = pd.DataFrame({'Date': predicted_dates, 'Predicted Passenger': predictions})
+
+        # Set the plot style to dark
+        plt.style.use('dark_background')
 
         # Visualize the results using matplotlib
         plt.plot(results['Date'], results['Predicted Passenger'])
         plt.xlabel('Date')
         plt.ylabel('Predicted Passenger')
         plt.title('Predicted Amount of Commuter Passenger over Time')
+        plt.gca().spines['top'].set_visible(False)
+        plt.gca().spines['right'].set_visible(False)
         st.pyplot(plt)
 
         # Optionally, you can also show the raw data in a table
