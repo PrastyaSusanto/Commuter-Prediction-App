@@ -5,8 +5,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.ticker import MaxNLocator
 
-title = 'Predict Amount of Commuter Passenger 🚉'
-subtitle = 'Predict Amount of Commuter Passenger using machine learning 🚄🚄 '
+title = 'Predict Amount of Commuter Passenger in Indonesia 🚉'
+subtitle = 'Predict Amount of Commuter Passenger in Indonesia using machine learning 🚄🚄 '
 
 def main():
     st.set_page_config(layout="centered", page_icon='🚉', page_title='Lets Predict Amount of Commuter Passenger!')
