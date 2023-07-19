@@ -49,7 +49,7 @@ def main():
         # Visualize the results using matplotlib
         plt.style.use('dark_background') 
         plt.plot(results['Date'], results['Predicted Passenger'], color='royalblue')
-        plt.xlabel('Year')
+        plt.xlabel('Date')
         plt.ylabel('Predicted Passenger')
         plt.xticks(rotation=90)
         plt.gca().spines['top'].set_visible(False)
