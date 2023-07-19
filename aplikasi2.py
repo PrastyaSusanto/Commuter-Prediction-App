@@ -48,7 +48,7 @@ def main():
         # Visualize the results using matplotlib
         plt.style.use('dark_background') 
         plt.plot(results['Date'], results['Predicted Passenger'])
-        plt.xlabel('Date')
+        plt.xlabel('Year')
         plt.ylabel('Predicted Passenger')
         plt.xticks(rotation=45)
         plt.gca().spines['top'].set_visible(False)
@@ -57,6 +57,9 @@ def main():
         plt.gca().xaxis.set_major_locator(MaxNLocator(nbins=10))  # Set maximum number of x-axis ticks
         
         st.pyplot(plt)
+
+        # Format the Date column in the results DataFrame
+        results['Date'] = results['Date'].dt.strftime('%d-%m-%Y')
 
         # Optionally, you can also show the raw data in a table
         st.dataframe(results)
